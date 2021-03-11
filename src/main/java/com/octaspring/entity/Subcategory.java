@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name="subcategory")
 public class Subcategory {
@@ -12,9 +14,11 @@ public class Subcategory {
 	@Column(name="id")
 	private Long id;
 	
+	@NotBlank(message="Pon un nombre bro")
 	@Column(name="name")
 	private String name;
 	
+	@NotBlank(message="Pon un nombre bro")
 	@Column(name="description")
 	private String description;
 	
@@ -26,6 +30,7 @@ public class Subcategory {
 
 	public Subcategory() {
 		super();
+		this.category = new Category();
 	}
 
 	public Subcategory(String name, String description, Category category, int status) {

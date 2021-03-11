@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Cursos</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row">
+			<h1>Cursos</h1>
+		</div>
+		<div class="row">
+			<div class="col-lg-4">
+				<form th:action="@{/course-create}" method="POST"
+					th:object="${course}" enctype="multipart/form-data">
+					<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+						<ul>
+							<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+						</ul>
+					</div>
+					<input type="text" th:field="*{id}" class="form-control"> <label>Titulo</label>
+					<input type="text" th:field="*{title}" class="form-control">
+					<label>Subtitulo</label> <input type="text" th:field="*{subtitle}"
+						class="form-control"> <label>Descripcion</label> <input
+						type="text" th:field="*{description}" class="form-control">
+					<label>Precio</label> <input type="number" th:field="*{price}"
+						class="form-control" step="0.1" min="0"> <br /> <label>Categorias</label>
+					<select class="form-select" th:name="selectCategor">
+						<option th:each="item : ${categorias}" th:text="${item.name}"
+							th:value="${item.id}"
+							th:selected="${item.id == course.category.id}"></option>
+					</select> <br /> <label>Subcategoria</label> <select class="form-select"
+						th:name="selectSubcategor">
+						<option th:each="item : ${subcategorias}" th:text="${item.name}"
+							th:value="${item.id}"
+							th:selected="${item.id == course.subcategory.id}"></option>
+					</select> <br /> <label>Lenguaje</label> <select class="form-select"
+						th:name="selectLang">
+						<option th:each="item : ${lenguajes}" th:text="${item.lang}"
+							th:value="${item.id}" th:selected="${item.id == course.lang.id}"></option>
+					</select> <br /> <label>Level</label> <select class="form-select"
+						th:name="selectLevel">
+						<option th:each="item : ${levels}" th:text="${item.level}"
+							th:value="${item.id}" th:selected="${item.id == course.level.id}"></option>
+					</select> <label>Imagen</label> <input type="file" name="file"
+						class="form-control">
+					<button type="submit" class="btn btn-primary">Registrar</button>
+				</form>
+			</div>
+			<div class="col-lg-8">
+				<table class="table table-dark table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Titulo</th>
+							<th>Subtitulo</th>
+							<th>Descripcion</th>
+							<th>Precio</th>
+							<th>Usuario</th>
+							<th>Categoria</th>
+							<th>Subcategoria</th>
+							<th>Level</th>
+							<th>Lenguaje</th>
+							<th>Imagen</th>
+							<th>Status</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item, iStat : ${listaTL}">
+							<td th:text="${iStat.count}"></td>
+							<td th:text="${item.title}"></td>
+							<td th:text="${item.subtitle}"></td>
+							<td th:text="${item.description}"></td>
+							<td th:text="${item.price}"></td>
+							<td th:text="${item.owner.email}"></td>
+							<td th:text="${item.category.name}"></td>
+							<td th:text="${item.subcategory.name}"></td>
+							<td th:text="${item.level.level}"></td>
+							<td th:text="${item.lang.lang}"></td>
+							<td th:text="${item.image}"></td>
+							<td th:text="${item.status} == 1 ? 'Activo' : 'Inactivo'"></td>
+							<td><a class="btn btn-success"
+								th:href="@{'/course-update/'+${item.id}}"> <i
+									class="fas fa-highlighter"></i> Editar
+							</a> <a class="btn btn-danger"
+								th:href="@{'/course-delete/'+${item.id}}"> <i
+									class="fas fa-trash-alt"></i> Eliminar
+							</a>
+								<div th:if="${item.status} == 1">
+									<a class="btn btn-warning"
+										th:href="@{'/course-deleteLogical/'+${item.id}}"> <i
+										class="fas fa-lock"></i> Desactivar
+									</a>
+								</div>
+								<div th:if="${item.status} == 0">
+									<a class="btn btn-warning"
+										th:href="@{'/course-deleteLogical/'+${item.id}}"> <i
+										class="fas fa-unlock"></i> Activar
+									</a>
+								</div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

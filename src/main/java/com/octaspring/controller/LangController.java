@@ -25,13 +25,18 @@ public class LangController {
 		List<Lang> listaLang= langInterface.findAll();
 		modelo.addAttribute("listaTl", listaLang);
 		modelo.addAttribute("name", "VIEGO");
+		modelo.addAttribute("action", "Registrar");
 		return "admin/lang";
 	}
 	
 	@PostMapping("/lang-create")
 	public String langCreate(Lang lang) {
+		if(lang.getId() == null) {
+			langInterface.save(lang);
+		}else {
+			langInterface.update(lang);
+		}
 		System.out.println("Registrado ");
-		langInterface.save(lang);
 		return "redirect:/lang";
 	}
 	
@@ -40,4 +45,7 @@ public class LangController {
 		langInterface.delete(id);
 		return "redirect:/lang";
 	}
+	
+	
+	
 }

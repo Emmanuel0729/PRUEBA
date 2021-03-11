@@ -2,11 +2,12 @@ package com.octaspring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.octaspring.dao.UserPersonInterface;
 import com.octaspring.entity.UserPerson;
-import com.octaspring.service.UserPersonService;
+
 
 @Controller
 public class UserPersonController {
@@ -15,9 +16,9 @@ public class UserPersonController {
 	private UserPersonInterface userPersonInterface;
 	
 	@PostMapping("/user-create")
-	public String userPersonCreate(UserPerson userperson) {
+	public String userPersonCreate(UserPerson userperson, @ModelAttribute("selectRole") int role) {
 		System.out.println(userperson.toString());
-		userPersonInterface.save(userperson);
+		userPersonInterface.save(userperson, role);
 		return "redirect:/register";
 	}
 }

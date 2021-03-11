@@ -14,5 +14,5 @@ public interface CategoryInterface {
 	
 	public List<Category> findAll();
 	
-	public List<Category> findById(long id);
+	public Category findById(long id);
 }

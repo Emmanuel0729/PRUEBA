@@ -48,9 +48,10 @@ public class CategoryService implements  CategoryInterface{
 	}
 
 	@Override
-	public List<Category> findById(long id) {
+	public Category findById(long id) {
 		// TODO Auto-generated method stub
-		return null;
+		sql = "SELECT * FROM category WHERE id= ?";
+		return this.jdbcTemplate.queryForObject(sql, new Object[] {id}, BeanPropertyRowMapper.newInstance(Category.class));
 	}
 
 }

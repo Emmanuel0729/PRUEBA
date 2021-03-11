@@ -5,7 +5,7 @@ import java.util.List;
 import com.octaspring.entity.UserPerson;
 
 public interface UserPersonInterface {
-	public void save(UserPerson userPerson);
+	public void save(UserPerson userPerson , int role);
 	
 	public void update(UserPerson userPerson);
 	

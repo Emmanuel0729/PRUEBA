@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="category")
@@ -12,9 +15,12 @@ public class Category {
 	@Column(name="id")
 	private Long id;
 	
+	@NotBlank(message="Pon un nombre bro")
+	@Size(min=3, max=50)
 	@Column(name="name")
 	private String name;
 	
+	@NotBlank(message="Pon una descripcion bro")
 	@Column(name="description")
 	private String description;
 	

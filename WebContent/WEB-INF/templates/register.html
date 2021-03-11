@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html xmls:th="http://www.thymeleaf.org">
+<html layout:decorate="~{layout/layout_base}"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>OctaCreate  User -</title>
 </head>
 <body>
-<form th:action="@{/user-create}" method="POST" th:object="${userperson}">
-	<label>Nombre</label>
-	<input type="text" class="form-control" th:field="*{name}"/>
-	<label>Apellido</label>
-	<input type="text" class="form-control" th:field="*{lastname}"/>
-	<label>Correo electronico</label>
-	<input type="email" class="form-control" th:field="*{email}"/>
-	<label>Contraseña</label>
-	<input type="password" class="form-control" th:field="*{password}"/>
-	<label>Genero</label>
-	<input type="radio" class="form-control" name="gender" value="1" th:field="*{gender}"/><label>Macho</label>
-	<input type="radio" class="form-control" name="gender" value="2" th:field="*{gender}"/><label>Hembra</label>
-	<button type="submit">Guardar</button>
-</form>
+	<div layout:fragment="content">
+		<div class="row my-5">
+			<h1>Registro de usuarios!!!!</h1>
+			<form th:action="@{/user-create}" method="POST" th:object="${userperson}">
+				<label>Nombre</label> 
+				<input type="text" class="form-control" th:field="*{name}" /> 
+				<label>Apellido</label>
+				<input type="text" class="form-control" th:field="*{lastname}" />
+				<label>Correo electronico</label>
+				<input type="email" class="form-control" th:field="*{email}" />
+				<label>Contraseña</label> 
+				<input type="password" class="form-control" th:field="*{password}" />
+				<label>Genero</label>
+				<input type="radio" class="form-check-input" name="gender" value="1" th:field="*{gender}" /><label>Macho</label>
+				<input type="radio" class="form-check-input" name="gender" value="2" th:field="*{gender}" /><label>Hembra</label>
+				<br />
+				<label>Role</label> 
+				<select class="form-select" th:name="selectRole">
+					<option th:each="item : ${roles}" th:text="${item.description}" th:value="${item.id}"></option>
+				</select>
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout_base}" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>OctaLogin -</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row my-5">
+			<div class="col-lg-4">
+			<div th:if="${param.error}" class="alert alert-danger">
+				Usuario/contrasena erroneos
+			</div>
+				<form method="POST" th:action="@{/login}" action="#">
+					<label class="form-label">Email</label>
+					<input name="username" class="form-control" type="email" placeholder="Correo electronico">
+					<label class="form-label">Contraseña</label>
+					<input name="password" class="form-control" type="password" placeholder="*****">
+					<div class="d-grip gap-2">
+						<button class="btn btn-success">Iniciar sesion</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

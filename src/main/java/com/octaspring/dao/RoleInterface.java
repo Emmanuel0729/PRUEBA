@@ -13,5 +13,7 @@ public interface RoleInterface {
 	
 	public List<Role> findAll();
 	
+	public List<Role> findRolesNotAdmin();
+	
 	public List<Role> findById(long id);
 }

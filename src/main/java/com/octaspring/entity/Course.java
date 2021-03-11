@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="course")
@@ -14,12 +17,18 @@ public class Course {
 	@Column(name="id")
 	private Long id;
 	
+	@NotBlank(message="Titulo requerido")
+	@Size(min=5, max=50)
 	@Column(name="title")
 	private String title;
 	
+	@NotBlank(message="Subtitulo requerido")
+	@Size(min=5, max=50)
 	@Column(name="subtitle")
 	private String subtitle;
 	
+	@NotBlank(message="Descripcion requerida")
+	@Size(min=5, max=50)
 	@Column(name="description")
 	private String description;
 	
@@ -52,6 +61,10 @@ public class Course {
 	
 	public Course() {
 		super();
+		this.category = new Category();
+		this.subcategory = new Subcategory();
+		this.level = new Level();
+		this.lang = new Lang();
 	}
 
 	public Course(String title, String subtitle, String description, double price, UserPerson owner, Category category,

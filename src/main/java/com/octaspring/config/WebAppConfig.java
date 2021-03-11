@@ -11,15 +11,29 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
+import com.octaspring.dao.CategoryInterface;
+import com.octaspring.dao.CourseInterface;
 import com.octaspring.dao.LangInterface;
+import com.octaspring.dao.LevelInterface;
+import com.octaspring.dao.RoleInterface;
+import com.octaspring.dao.SubcategoryInterface;
 import com.octaspring.dao.UserPersonInterface;
+import com.octaspring.service.CategoryService;
+import com.octaspring.service.CourseService;
 import com.octaspring.service.LangService;
+import com.octaspring.service.LevelService;
+import com.octaspring.service.RoleService;
+import com.octaspring.service.SubcategoryService;
 import com.octaspring.service.UserPersonService;
+
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @EnableWebMvc
 @Configuration
@@ -34,6 +48,13 @@ public class WebAppConfig implements ApplicationContextAware{
 		this.applicationContext = applicationContext;
 	}
 
+	@Bean(name="multipartResolver")
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+		multipartResolver.setMaxUploadSize(100000000);
+		return multipartResolver;
+	}
+	
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -56,6 +77,10 @@ public class WebAppConfig implements ApplicationContextAware{
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(this.templateResolver());
 		templateEngine.setEnableSpringELCompiler(true);
+		
+		templateEngine.addDialect(new LayoutDialect());
+		templateEngine.addDialect(new SpringSecurityDialect());
+		
 		return templateEngine;
 	}
 	
@@ -84,5 +109,30 @@ public class WebAppConfig implements ApplicationContextAware{
 	@Bean
 	public UserPersonInterface getUserPerson() {
 		return new UserPersonService(this.getDataSource()); 
+	}
+	
+	@Bean
+	public CategoryInterface getCategory() {
+		return new CategoryService(this.getDataSource());
+	}
+	
+	@Bean
+	public RoleInterface getRole() {
+		return new RoleService(this.getDataSource());
+	}
+	
+	@Bean
+	public SubcategoryInterface getSubcategory() {
+		return new SubcategoryService(this.getDataSource());
+	}
+	
+	@Bean
+	public LevelInterface getLevel() {
+		return new LevelService(this.getDataSource());
+	}
+	
+	@Bean
+	public CourseInterface getCourse() {
+		return new CourseService(this.getDataSource());
 	}
 }

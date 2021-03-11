@@ -5,13 +5,13 @@ import java.util.List;
 import com.octaspring.entity.Subcategory;
 
 public interface SubcategoryInterface {
-	public void save(Subcategory subcategory);
+	public void save(Subcategory subcategory, int category);
 	
-	public void update(Subcategory subcategory);
+	public void update(Subcategory subcategory, int category);
 	
 	public void delete(long id);
 	
 	public List<Subcategory> findAll();
 	
-	public List<Subcategory> findById(long id);
+	public Subcategory findById(long id);
 }

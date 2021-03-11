@@ -6,13 +6,15 @@ import com.octaspring.entity.Course;
 
 
 public interface CourseInterface {
-	public void save(Course course);
+	public void save(Course course, int category, int subcategory, int level, int lang);
 	
-	public void update(Course course);
+	public void update(Course course, int category, int subcategory, int level, int lang);
 	
 	public void delete(long id);
 	
+	public void deleteLogical(long id, int status);
+	
 	public List<Course> findAll();
 	
-	public List<Course> findById(long id);
+	public Course findById(long id);
 }
